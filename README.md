@@ -7,7 +7,7 @@ We are looking for a better understanding of hotels in Spain based on public inf
   - Costa del Sol
   - Costa Blanca.
 
-We want to do a preliminary data visualization and explore the hotels and reviews in these regions.
+We want to do a preliminary data visualization and explore the hotels and their reviews in these regions.
 
 ## Instructions
 Your job is:
@@ -17,7 +17,7 @@ Your job is:
           - only keep reviews from 2018 and 2019
           - only keep hotels with at least 5 reviews in 2019
       - **add geographic information**: we only have hotel addresses in the database but to visualize them on a map we need their coordinates (latitude/longitude):
-          - you'll need to "geocode" these addresses
+          - you'll need to "[geocode](https://en.wikipedia.org/wiki/Address_geocoding)" these addresses
           - the resulting coordinates will allow you to generate a **geojson**
           - Note: you can visualize geojson using [mapshaper](https://mapshaper.org/) or [geojson.io](http://geojson.io/)
   2. to visualize the data:\
@@ -86,7 +86,7 @@ CREATE TABLE `hotel_reviews` (
 ### Description
 Data is stored in two separates table:
 
-**`hotel_info`**
+**`hotel_info`**\
 Contains overview information about each hotel, including name, address, and review scoring (`review_score`) for the hotel itself and 7 different categories:
   - Cleanliness (clean)
   - Comfort (comf)
@@ -96,8 +96,8 @@ Contains overview information about each hotel, including name, address, and rev
   - Value for money (vfm)
   - Free WiFi (wifi).
 
-**`hotel_review`**
-Contains the reviews associated to each hotel, including review date, scoring and information about the reviewer among others things
+**`hotel_reviews`**\
+Contains the reviews associated to each hotel, including review date, scoring and information about the reviewer among others things.
 
 
 ## What is Geocoding?
@@ -107,17 +107,17 @@ Contains the reviews associated to each hotel, including review date, scoring an
 Example:
 ```
 Input:
-hotel_address: '11 Calle de Esparteros Floor 4, Door 4, Centro de Madrid, 28012 Madrid,'
+hotel_address: '11 Calle de Esparteros Floor 4, Door 4, Centro de Madrid, 28012 Madrid'
 
-Output:,
-longitude: '-3.7075158,17'
-latitude: '40.4154105'
+Output:
+longitude: -3.7053244194338273
+latitude: 40.41544007462682
 ```
 
 You can use any geocoding API you like.
 
 ## Mapbox
-We generated a temporary token for you to use mapbox without having to create an account
+We generated a temporary token for you to use mapbox without having to create an account.\
 It should have been included in the mail we sent you.\
 Make sure you use [mapbox-gl-js](https://docs.mapbox.com/mapbox-gl-js/api/), and not the older mapbox.js
 
@@ -125,11 +125,13 @@ Make sure you use [mapbox-gl-js](https://docs.mapbox.com/mapbox-gl-js/api/), and
 You should at least submit the following files:
   - Python:
     - a Pipefile and Pipfile.lock or requirements.txt for your python dependencies
-    - the python code you used for the preparation phase (could be a jupyter notebook)
+    - the python code you used for the preparation phase (it can be a jupyter notebook)
   - Data:
     - the geojson file you generated and you should be using in the visualization
-  - HTML/Javascript/CSS:
-    - the visualization itself. An html file for the data vizualization (js, css could be in separate files or all in the html)
+  - HTML/Javascript/CSS:\
+    the visualization itself
+    - An html file for the data vizualization
+    - optionally: the js and css if you keep them separated
 
 Basically we should be able to easily:
   - reproduce your python environment (`pipenv install` or `pip install -r requirements.txt`) and run your code to generate the geojson
@@ -137,7 +139,7 @@ Basically we should be able to easily:
 
 Once you're done with the assignement, the preferred submission method is by
 sending us a link to a public repository where you've committed your solution (github, gitlab, bitbucket, etc).\
-We also accept the aforementionned files zipped in a mail attachment.\
+We also accept the aforementionned files zipped in a mail attachment.
 
 Send your submission at <desarrollo@tyrceo.com>
 
