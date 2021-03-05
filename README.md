@@ -1,33 +1,36 @@
 # Tyrceo Hiring Test Booking
 
 ## The Story
-We are looking for a better understanding of hotels in Spain based on public information from Booking.com. So, we have collected data for every hotel from four different regions in Spain: Madrid, Barcelona, Costa del Sol and Costa Blanca. We want to do a preliminary data visualization and explore the hotels and reviews in these regions.
+We are looking for a better understanding of hotels in Spain based on public information from Booking.com. So, we have collected data for every hotel from four different regions in Spain:
+  - Madrid
+  - Barcelona
+  - Costa del Sol
+  - Costa Blanca.
+
+We want to do a preliminary data visualization and explore the hotels and reviews in these regions.
 
 ## Instructions
 Your job is:
-  - to prepare the data:
-    - **query** these results from the database
-    - **filter data**
-      - information from some hotels is out of date
-      - we want to keep only most recent reviews from most active hotels on the booking platform
-      - only keep reviews from 2018 and 2019
-      - only keep hotels with at least 5 reviews in 2019
-    - **geographic information**:
-      - we have hotel address in the database but we are missing coordinates (lat, lng)
-      - so we need to geocoding these addresses 
-      - once geocoding is done, you can export this data as a **geojson**
-      - Note: you can visualize the result using [mapshaper](https://mapshaper.org/) or [geojson.io](http://geojson.io/)      
-  - to visualize the data:
-    - build a simple html page with a mapbox map and a basic table to show the reviews
-    - add a selector to change between the four different regions or to visualize all of them
-      - show hotels from the selected region and hide the rest 
-      - update review-table according to the set of hotels selected
-    - add the geojson you prepared as a source
-    - bonus#1: when you click on or hover over a hotel, show a popup including basic information
-    - bonus#2: set a navigate-to funcionality to improve UX when changing the areas from the selector
-    - bonus#3: feel free to innovate and show your strengths
+  1. to prepare the data:
+      - **query** these results from the database
+      - **filter data**: since the information from some hotels is out of date, we want to keep only the most recent reviews from the most active hotels on the booking platform:
+          - only keep reviews from 2018 and 2019
+          - only keep hotels with at least 5 reviews in 2019
+      - **add geographic information**: we only have hotel addresses in the database but to visualize them on a map we need their coordinates (latitude/longitude):
+          - you'll need to "geocode" these addresses
+          - the resulting coordinates will allow you to generate a **geojson**
+          - Note: you can visualize geojson using [mapshaper](https://mapshaper.org/) or [geojson.io](http://geojson.io/)
+  2. to visualize the data:\
+    using the prepared data:
+      - build a simple html page with a mapbox **map** and a basic **table** to show the reviews
+      - add a selector to filter between the four different regions or to visualize them all at once
+          - show hotels from the selected region and hide the rest
+          - update review table according to the set of selected hotels
+      - bonus#1: when you click on or hover over a hotel, show a popup including basic information
+      - bonus#2: set a navigate-to funcionality to improve UX when changing the areas from the selector
+      - bonus#3: feel free to innovate and show your strengths
 
-## Database Structure
+## Database
 ### Host and Credentials
 The information to access the database should be included in the mail we sent you.
 
@@ -80,14 +83,30 @@ CREATE TABLE `hotel_reviews` (
   KEY `index7` (`posting_conts`,`reviewer_location`,`hash_reviewer_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 ```
+### Description
+Data is stored in two separates table:
 
-### Geocoding
-Address geocoding, or simply geocoding, is the process of taking a text-based description of a location, such as an address or the name of a place, and returning geographic coordinates, frequently latitude/longitude [https://en.wikipedia.org/wiki/Address_geocoding]:
+**`hotel_info`**
+Contains overview information about each hotel, including name, address, and review scoring (`review_score`) for the hotel itself and 7 different categories:
+  - Cleanliness (clean)
+  - Comfort (comf)
+  - Location (loct)
+  - Facilities (fclt)
+  - Staff (staff)
+  - Value for money (vfm)
+  - Free WiFi (wifi).
 
+**`hotel_review`**
+Contains the reviews associated to each hotel, including review date, scoring and information about the reviewer among others things
+
+
+## What is Geocoding?
+> **Address geocoding**, or simply **geocoding**, is the process of taking a text-based description of a location, such as an address or the name of a place, and returning geographic coordinates, frequently latitude/longitude
+[source](https://en.wikipedia.org/wiki/Address_geocoding)
+
+Example:
 ```
 Input:
-hotel_id: '00129a71268e171231920d283f327359'
-hotel_name: 'Unbeatable Sol Mayor APT'
 hotel_address: '11 Calle de Esparteros Floor 4, Door 4, Centro de Madrid, 28012 Madrid,'
 
 Output:,
@@ -95,16 +114,7 @@ longitude: '-3.7075158,17'
 latitude: '40.4154105'
 ```
 
-You could use whatever geocoding api you prefer. 
-
-### Database design
-Data is easily store in two separates table. 
-
-First one, **hotel_info**, contains overview information about each hotel, including name, address, and review scoring for the hotel itself (review_score) and 7 different categories:
-Cleanliness (clean), Comfort (comf), Location (loct), Facilities (fclt), Staff (staff), Value for money (vfm) and Free WiFi (wifi). 
-
-Second one, **hotel_review**, contains the reviews associated to each hotel, including review date, scoring and information about the reviewer among others.
-
+You can use any geocoding API you like.
 
 ## Mapbox
 We generated a temporary token for you to use mapbox without having to create an account
@@ -113,22 +123,28 @@ Make sure you use [mapbox-gl-js](https://docs.mapbox.com/mapbox-gl-js/api/), and
 
 ## Submission
 You should at least submit the following files:
-  - a Pipefile and Pipfile.lock or requirements.txt for your python dependencies
-  - a python script for the data preparation and geocoding 
-    - or optionally a jupyter notebook
-  - an html file for the data vizualization
-    - optionally separated css/js or you can keep everything into one html file
-  - a geojson file resulting from executing the python script and accessible from the html
+  - Python:
+    - a Pipefile and Pipfile.lock or requirements.txt for your python dependencies
+    - the python code you used for the preparation phase (could be a jupyter notebook)
+  - Data:
+    - the geojson file you generated and you should be using in the visualization
+  - HTML/Javascript/CSS:
+    - the visualization itself. An html file for the data vizualization (js, css could be in separate files or all in the html)
+
+Basically we should be able to easily:
+  - reproduce your python environment (`pipenv install` or `pip install -r requirements.txt`) and run your code to generate the geojson
+  - as well as see your final visualization.
 
 Once you're done with the assignement, the preferred submission method is by
 sending us a link to a public repository where you've committed your solution (github, gitlab, bitbucket, etc).\
 We also accept the aforementionned files zipped in a mail attachment.\
-Send your submission at **desarrollo@tyrceo.com**
+
+Send your submission at <desarrollo@tyrceo.com>
 
 
 ## Suggested python version and libraries
 You are free to use any libraries you want.\
-You are expected to use python 3 syntax (we use 3.7.5 these days).\
+You are expected to use python 3 syntax (we use 3.7+ these days).\
 You'll probably find the following libraries quite useful:
   - pandas and geopandas
   - pymysql
@@ -147,6 +163,6 @@ So the goal of this test is two-fold:
   1. giving us an idea of how you can deal with technology or problem you're not used to deal with
   2. introducing you to some of the tools you'll be using often when working at Tyrceo (python, pandas, mapbox, database, etc.)
 
-If you have any question/doubt don't hesitate to send a mail at desarrollo@tyrceo.com
+If you have any question/doubt don't hesitate to send a mail at <desarrollo@tyrceo.com>
 
 Good luck and have fun.
